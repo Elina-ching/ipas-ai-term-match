@@ -2,94 +2,26 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI 中級名詞遊樂場｜iPAS 實戰版</title>
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <main class="app-shell">
     <section class="hero">
-      <div>
-        <p class="eyebrow">iPAS AI 應用規劃師中級</p>
-        <h1>AI 名詞遊樂場</h1>
-        <p class="subtitle">用遊戲把中級名詞練成反射動作，也能停下來把觀念看懂。</p>
-      </div>
-      <div class="scoreboard">
-        <div><span>分數</span><strong id="score">0</strong></div>
-        <div><span>Combo</span><strong id="combo">0</strong></div>
-        <div><span>最高分</span><strong id="bestScore">0</strong></div>
-      </div>
+      <div><p class="eyebrow">iPAS AI 應用規劃師中級</p><h1>AI 名詞遊樂場</h1><p class="subtitle">用遊戲把中級名詞練成反射動作，也能停下來把觀念看懂。</p></div>
+      <div class="scoreboard"><div><span>分數</span><strong id="score">0</strong></div><div><span>Combo</span><strong id="combo">0</strong></div><div><span>最高分</span><strong id="bestScore">0</strong></div></div>
     </section>
-
     <section class="controls card">
       <label>練習範圍<select id="categorySelect"></select></label>
-      <div class="mode-switch" role="group" aria-label="遊戲模式">
-        <button id="truckModeBtn" class="mode-btn active" type="button">🚚 貨運快手</button>
-        <button id="memoryModeBtn" class="mode-btn" type="button">🃏 翻牌對對碰</button>
-        <button id="cannonModeBtn" class="mode-btn" type="button">💥 名詞高射炮</button>
-      </div>
-      <button id="resetScoreBtn" class="mode-btn" type="button">↺ 分數歸零</button>
-      <button id="newRoundBtn" class="primary" type="button">新局重來</button>
+      <div class="mode-switch" role="group" aria-label="遊戲模式"><button id="truckModeBtn" class="mode-btn active" type="button">🚚 貨運快手</button><button id="memoryModeBtn" class="mode-btn" type="button">🃏 翻牌對對碰</button><button id="cannonModeBtn" class="mode-btn" type="button">💥 名詞高射炮</button></div>
+      <button id="soundBtn" class="mode-btn" type="button">🔊 音效開</button><button id="resetScoreBtn" class="mode-btn" type="button">↺ 分數歸零</button><button id="newRoundBtn" class="primary" type="button">新局重來</button>
     </section>
-
-    <section id="truckGame" class="game-section">
-      <div class="road-card card">
-        <div class="game-title-row">
-          <div><strong>🚚 AI 貨運快手</strong><span>答對直接接下一台；答錯才停車看詳解</span></div>
-          <div class="truck-actions">
-            <div class="speed-badge">速度 <b id="speedLevel">1</b></div>
-            <button id="truckPauseBtn" class="pause-btn" type="button">⏸ 暫停</button>
-            <button id="truckNextBtn" class="next-btn hidden" type="button">下一題 ▶</button>
-          </div>
-        </div>
-        <div class="road" id="road">
-          <div class="road-line"></div>
-          <div class="truck" id="truck" aria-live="polite">
-            <div class="truck-box"><span id="truckTerm">Loading…</span></div>
-            <div class="truck-cab">🚚</div>
-          </div>
-        </div>
-        <div class="timer-track"><div id="timerBar" class="timer-bar"></div></div>
-        <div id="cargoOptions" class="cargo-grid"></div>
-      </div>
-    </section>
-
-    <section id="memoryGame" class="game-section hidden">
-      <div class="memory-card card">
-        <div class="game-title-row"><div><strong>🃏 AI 翻牌對對碰</strong><span>翻出「名詞＋定義」，配成一對就消失</span></div><div><span id="memoryProgress">0 / 6</span></div></div>
-        <div id="memoryBoard" class="memory-board"></div>
-      </div>
-    </section>
-
-    <section id="cannonGame" class="game-section hidden">
-      <div class="cannon-card card">
-        <div class="game-title-row"><div><strong>💥 AI 名詞高射炮</strong><span>看中文專有名詞，射掉對應的英文名詞磚</span></div><div class="speed-badge">下降 <b id="dropLevel">0</b> 格</div></div>
-        <div class="cannon-clue" id="cannonClue">中文名詞：準備中…</div>
-        <div class="cannon-arena" id="cannonArena">
-          <div id="brickCeiling" class="brick-ceiling"></div>
-          <div class="danger-line"><span>危險線</span></div>
-          <div id="bullet" class="bullet hidden"></div>
-          <div id="cannon" class="cannon">🔺</div>
-        </div>
-        <div class="cannon-controls">
-          <button id="cannonLeft" type="button">← 左移</button>
-          <button id="cannonFire" class="fire-btn" type="button">🔥 發射</button>
-          <button id="cannonRight" type="button">右移 →</button>
-        </div>
-      </div>
-    </section>
-
+    <section id="truckGame" class="game-section"><div class="road-card card"><div class="game-title-row"><div><strong>🚚 AI 貨運快手</strong><span>答對直接接下一台；答錯才停車看詳解</span></div><div class="truck-actions"><div class="speed-badge">速度 <b id="speedLevel">1</b></div><button id="truckPauseBtn" class="pause-btn" type="button">⏸ 暫停</button><button id="truckNextBtn" class="next-btn hidden" type="button">下一題 ▶</button></div></div><div class="road" id="road"><div class="road-line"></div><div class="truck" id="truck" aria-live="polite"><div class="truck-box"><span id="truckTerm">Loading…</span></div><div class="truck-cab">🚚</div></div></div><div class="timer-track"><div id="timerBar" class="timer-bar"></div></div><div id="cargoOptions" class="cargo-grid"></div></div></section>
+    <section id="memoryGame" class="game-section hidden"><div class="memory-card card"><div class="game-title-row"><div><strong>🃏 AI 翻牌對對碰</strong><span>翻出「名詞＋定義」，配成一對就消失</span></div><div><span id="memoryProgress">0 / 6</span></div></div><div id="memoryBoard" class="memory-board"></div></div></section>
+    <section id="cannonGame" class="game-section hidden"><div class="cannon-card card"><div class="game-title-row"><div><strong>💥 AI 名詞高射炮</strong><span>看中文專有名詞，射掉對應的英文名詞磚</span></div><div class="speed-badge">下降 <b id="dropLevel">0</b> 格</div></div><div class="cannon-clue" id="cannonClue">中文名詞：準備中…</div><div class="cannon-arena" id="cannonArena"><div id="brickCeiling" class="brick-ceiling"></div><div class="danger-line"><span>危險線</span></div><div id="bullet" class="bullet hidden"></div><div id="cannon" class="cannon">🔺</div></div><div class="cannon-controls"><button id="cannonLeft" type="button">← 左移</button><button id="cannonFire" class="fire-btn" type="button">🔥 發射</button><button id="cannonRight" type="button">右移 →</button></div></div></section>
     <section id="feedback" class="feedback card" aria-live="polite"><strong>準備好了嗎？</strong><p>選一個模式開始。</p></section>
-
-    <section class="stats-strip">
-      <div><span>累積作答</span><strong id="totalAnswered">0</strong></div>
-      <div><span>待複習錯題</span><strong id="wrongCount">0</strong></div>
-      <div><span>本局正確</span><strong id="correctCount">0</strong></div>
-    </section>
+    <section class="stats-strip"><div><span>累積作答</span><strong id="totalAnswered">0</strong></div><div><span>待複習錯題</span><strong id="wrongCount">0</strong></div><div><span>本局正確</span><strong id="correctCount">0</strong></div></section>
   </main>
-  <script src="data.js?v=6"></script>
-  <script src="translations.js?v=6"></script>
-  <script src="bootstrap.js?v=6"></script>
-  <script src="app.js?v=6"></script>
-</body>
-</html>
+  <script src="data.js?v=7"></script><script src="translations.js?v=7"></script><script src="bootstrap.js?v=7"></script><script src="sound.js?v=7"></script><script src="app.js?v=7"></script>
+</body></html>
