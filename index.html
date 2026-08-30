@@ -12,7 +12,7 @@
       <div>
         <p class="eyebrow">iPAS AI 應用規劃師中級</p>
         <h1>AI 名詞遊樂場</h1>
-        <p class="subtitle">三種玩法，把中級名詞練成反射動作。</p>
+        <p class="subtitle">用遊戲把中級名詞練成反射動作，也能停下來把觀念看懂。</p>
       </div>
       <div class="scoreboard">
         <div><span>分數</span><strong id="score">0</strong></div>
@@ -33,8 +33,21 @@
 
     <section id="truckGame" class="game-section">
       <div class="road-card card">
-        <div class="game-title-row"><div><strong>🚚 AI 貨運快手</strong><span>車子離場前，把正確貨物裝上去。第 1 級已調慢。</span></div><div class="speed-badge">速度 <b id="speedLevel">1</b></div></div>
-        <div class="road" id="road"><div class="road-line"></div><div class="truck" id="truck" aria-live="polite"><div class="truck-box"><span id="truckTerm">Loading…</span></div><div class="truck-cab">🚚</div></div></div>
+        <div class="game-title-row">
+          <div><strong>🚚 AI 貨運快手</strong><span>車子離場前，把正確貨物裝上去</span></div>
+          <div class="truck-actions">
+            <div class="speed-badge">速度 <b id="speedLevel">1</b></div>
+            <button id="truckPauseBtn" class="pause-btn" type="button">⏸ 暫停</button>
+            <button id="truckNextBtn" class="next-btn hidden" type="button">下一題 ▶</button>
+          </div>
+        </div>
+        <div class="road" id="road">
+          <div class="road-line"></div>
+          <div class="truck" id="truck" aria-live="polite">
+            <div class="truck-box"><span id="truckTerm">Loading…</span></div>
+            <div class="truck-cab">🚚</div>
+          </div>
+        </div>
         <div class="timer-track"><div id="timerBar" class="timer-bar"></div></div>
         <div id="cargoOptions" class="cargo-grid"></div>
       </div>
@@ -42,31 +55,31 @@
 
     <section id="memoryGame" class="game-section hidden">
       <div class="memory-card card">
-        <div class="game-title-row"><div><strong>🃏 AI 翻牌對對碰</strong><span>翻出「英文名詞＋中文概念」，配成一對就消失</span></div><div><span id="memoryProgress">0 / 6</span></div></div>
+        <div class="game-title-row"><div><strong>🃏 AI 翻牌對對碰</strong><span>翻出「名詞＋定義」，配成一對就消失</span></div><div><span id="memoryProgress">0 / 6</span></div></div>
         <div id="memoryBoard" class="memory-board"></div>
       </div>
     </section>
 
     <section id="cannonGame" class="game-section hidden">
       <div class="cannon-card card">
-        <div class="game-title-row"><div><strong>💥 AI 名詞高射炮</strong><span>看中文提示，把炮口移到正確英文名詞下方再發射</span></div><div class="speed-badge">下降 <b id="dropLevel">0</b> 格</div></div>
-        <div id="cannonClue" class="cannon-clue">準備裝填題目…</div>
-        <div id="cannonArena" class="cannon-arena">
+        <div class="game-title-row"><div><strong>💥 AI 名詞高射炮</strong><span>看中文提示，射掉正確英文名詞磚</span></div><div class="speed-badge">下降 <b id="dropLevel">0</b> 格</div></div>
+        <div class="cannon-clue" id="cannonClue">中文提示：準備中…</div>
+        <div class="cannon-arena" id="cannonArena">
           <div id="brickCeiling" class="brick-ceiling"></div>
           <div class="danger-line"><span>危險線</span></div>
           <div id="bullet" class="bullet hidden"></div>
-          <div id="cannon" class="cannon">🔺<span>砲</span></div>
+          <div id="cannon" class="cannon">🔺</div>
         </div>
         <div class="cannon-controls">
-          <button id="cannonLeft" type="button">⬅ 左移</button>
+          <button id="cannonLeft" type="button">← 左移</button>
           <button id="cannonFire" class="fire-btn" type="button">🔥 發射</button>
-          <button id="cannonRight" type="button">右移 ➡</button>
+          <button id="cannonRight" type="button">右移 →</button>
         </div>
-        <p class="key-hint">鍵盤也可以：← → 移動，Space 發射。射錯的磚會變硬，天花板下降一格。</p>
       </div>
     </section>
 
-    <section id="feedback" class="feedback card" aria-live="polite"><strong>準備開玩！</strong><p>選好章節後開始。</p></section>
+    <section id="feedback" class="feedback card" aria-live="polite"><strong>準備好了嗎？</strong><p>選一個模式開始。</p></section>
+
     <section class="stats-strip">
       <div><span>累積作答</span><strong id="totalAnswered">0</strong></div>
       <div><span>待複習錯題</span><strong id="wrongCount">0</strong></div>
@@ -74,6 +87,7 @@
     </section>
   </main>
   <script src="data.js"></script>
+  <script src="translations.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
