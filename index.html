@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 中級名詞消消樂｜iPAS 實戰版</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">iPAS AI 應用規劃師中級</p>
+        <h1>AI 名詞消消樂</h1>
+        <p class="subtitle">把技術名詞和正確概念配起來。答對累積 Combo，答錯立即補觀念。</p>
+      </div>
+      <div class="scoreboard">
+        <div><span>分數</span><strong id="score">0</strong></div>
+        <div><span>Combo</span><strong id="combo">0</strong></div>
+        <div><span>最高分</span><strong id="bestScore">0</strong></div>
+      </div>
+    </section>
+
+    <section class="controls card">
+      <label>練習範圍
+        <select id="categorySelect"></select>
+      </label>
+      <label>每回合配對數
+        <select id="pairCount">
+          <option value="4">4 組</option>
+          <option value="6" selected>6 組</option>
+          <option value="8">8 組</option>
+        </select>
+      </label>
+      <button id="newRoundBtn" class="primary">開始新回合</button>
+      <button id="resetStatsBtn" class="secondary">重設紀錄</button>
+    </section>
+
+    <section class="progress-row">
+      <div><span>本回合</span><strong id="roundProgress">0 / 0</strong></div>
+      <div><span>累積答題</span><strong id="totalAnswered">0</strong></div>
+      <div><span>待複習錯題</span><strong id="wrongCount">0</strong></div>
+    </section>
+
+    <section class="game-grid">
+      <div class="panel card">
+        <div class="panel-head">
+          <h2>名詞</h2>
+          <span>先點一個名詞</span>
+        </div>
+        <div id="termList" class="option-list"></div>
+      </div>
+
+      <div class="panel card">
+        <div class="panel-head">
+          <h2>概念</h2>
+          <span>再找正確解釋</span>
+        </div>
+        <div id="definitionList" class="option-list"></div>
+      </div>
+    </section>
+
+    <section id="feedback" class="feedback card" aria-live="polite">
+      <strong>準備好了嗎？</strong>
+      <p>選擇分類後按「開始新回合」。</p>
+    </section>
+
+    <section class="card review-card">
+      <div class="panel-head">
+        <h2>錯題本</h2>
+        <button id="clearWrongBtn" class="text-btn">清除錯題</button>
+      </div>
+      <div id="wrongList" class="wrong-list"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
