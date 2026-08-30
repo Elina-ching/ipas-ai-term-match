@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI 中級名詞消消樂｜iPAS 實戰版</title>
+  <title>AI 中級名詞遊樂場｜iPAS 實戰版</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
     <section class="hero">
       <div>
         <p class="eyebrow">iPAS AI 應用規劃師中級</p>
-        <h1>AI 名詞消消樂</h1>
-        <p class="subtitle">把技術名詞和正確概念配起來。答對累積 Combo，答錯立即補觀念。</p>
+        <h1>AI 名詞遊樂場</h1>
+        <p class="subtitle">不是做題，是闖關。選一種玩法，把中級名詞練成反射動作。</p>
       </div>
       <div class="scoreboard">
         <div><span>分數</span><strong id="score">0</strong></div>
@@ -22,58 +22,44 @@
     </section>
 
     <section class="controls card">
-      <label>練習範圍
-        <select id="categorySelect"></select>
-      </label>
-      <label>每回合配對數
-        <select id="pairCount">
-          <option value="4">4 組</option>
-          <option value="6" selected>6 組</option>
-          <option value="8">8 組</option>
-        </select>
-      </label>
-      <button id="newRoundBtn" class="primary">開始新回合</button>
-      <button id="resetStatsBtn" class="secondary">重設紀錄</button>
+      <label>練習範圍<select id="categorySelect"></select></label>
+      <div class="mode-switch" role="group" aria-label="遊戲模式">
+        <button id="truckModeBtn" class="mode-btn active" type="button">🚚 貨運快手</button>
+        <button id="memoryModeBtn" class="mode-btn" type="button">🃏 翻牌對對碰</button>
+      </div>
+      <button id="newRoundBtn" class="primary" type="button">重新開始</button>
     </section>
 
-    <section class="progress-row">
-      <div><span>本回合</span><strong id="roundProgress">0 / 0</strong></div>
-      <div><span>累積答題</span><strong id="totalAnswered">0</strong></div>
+    <section id="truckGame" class="game-section">
+      <div class="road-card card">
+        <div class="game-title-row"><div><strong>🚚 AI 貨運快手</strong><span>車子離場前，把正確貨物裝上去</span></div><div class="speed-badge">速度 <b id="speedLevel">1</b></div></div>
+        <div class="road" id="road">
+          <div class="road-line"></div>
+          <div class="truck" id="truck" aria-live="polite">
+            <div class="truck-box"><span id="truckTerm">Loading…</span></div>
+            <div class="truck-cab">🚚</div>
+          </div>
+        </div>
+        <div class="timer-track"><div id="timerBar" class="timer-bar"></div></div>
+        <div id="cargoOptions" class="cargo-grid"></div>
+      </div>
+    </section>
+
+    <section id="memoryGame" class="game-section hidden">
+      <div class="memory-card card">
+        <div class="game-title-row"><div><strong>🃏 AI 翻牌對對碰</strong><span>翻出「名詞＋定義」，配成一對就消失</span></div><div><span id="memoryProgress">0 / 6</span></div></div>
+        <div id="memoryBoard" class="memory-board"></div>
+      </div>
+    </section>
+
+    <section id="feedback" class="feedback card" aria-live="polite"><strong>準備開車！</strong><p>選好章節後直接開始。</p></section>
+
+    <section class="stats-strip">
+      <div><span>累積作答</span><strong id="totalAnswered">0</strong></div>
       <div><span>待複習錯題</span><strong id="wrongCount">0</strong></div>
-    </section>
-
-    <section class="game-grid">
-      <div class="panel card">
-        <div class="panel-head">
-          <h2>名詞</h2>
-          <span>先點一個名詞</span>
-        </div>
-        <div id="termList" class="option-list"></div>
-      </div>
-
-      <div class="panel card">
-        <div class="panel-head">
-          <h2>概念</h2>
-          <span>再找正確解釋</span>
-        </div>
-        <div id="definitionList" class="option-list"></div>
-      </div>
-    </section>
-
-    <section id="feedback" class="feedback card" aria-live="polite">
-      <strong>準備好了嗎？</strong>
-      <p>選擇分類後按「開始新回合」。</p>
-    </section>
-
-    <section class="card review-card">
-      <div class="panel-head">
-        <h2>錯題本</h2>
-        <button id="clearWrongBtn" class="text-btn">清除錯題</button>
-      </div>
-      <div id="wrongList" class="wrong-list"></div>
+      <div><span>本局正確</span><strong id="correctCount">0</strong></div>
     </section>
   </main>
-
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
