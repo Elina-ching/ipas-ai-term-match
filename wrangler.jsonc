@@ -1,0 +1,12 @@
+{
+  "name": "ipas-ai-term-match",
+  "main": "server/worker.mjs",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "d1_databases": [{"binding": "DB", "database_name": "ipas-adventure", "database_id": "272fafc6-4ff4-4475-8183-22386a3129b3"}],
+  "ratelimits": [
+    {"name":"API_LIMIT","namespace_id":"1001","simple":{"limit":60,"period":60}},
+    {"name":"JOIN_LIMIT","namespace_id":"1002","simple":{"limit":3,"period":60}}
+  ],
+  "observability": {"enabled": false}
+}
