@@ -1,4 +1,7 @@
 import { answers } from './answers.mjs';
+import { assetHeaders } from './headers.mjs';
+// 靜態資源的資安標頭由 Worker 補上；只靠 _headers 檔在目前的部署未生效。
+async function asset(req,env){const res=await env.ASSETS.fetch(req);const out=new Response(res.body,res);for(const name of Object.keys(assetHeaders))out.headers.set(name,assetHeaders[name]);return out}
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const digest=async token=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token)))).map(x=>x.toString(16).padStart(2,'0')).join('');
 export function validAnswer(level,target,choice){return Object.hasOwn(answers,level)&&typeof target==='string'&&typeof choice==='string'&&Object.hasOwn(answers[level],target)&&answers[level][target]===choice}
@@ -7,7 +10,7 @@ async function readBody(req){
  while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>1024){await reader.cancel();throw new RangeError('body')}chunks.push(value)}
  const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length}return new TextDecoder().decode(bytes);
 }
-export default {async fetch(req,env){const url=new URL(req.url);if(!url.pathname.startsWith('/api/'))return env.ASSETS.fetch(req);if(!env.DB)return json({error:'World ranking not configured'},503);if(req.headers.get('Origin')&&req.headers.get('Origin')!==url.origin)return json({error:'Origin not allowed'},403);try{
+export default {async fetch(req,env){const url=new URL(req.url);if(!url.pathname.startsWith('/api/'))return asset(req,env);if(!env.DB)return json({error:'World ranking not configured'},503);if(req.headers.get('Origin')&&req.headers.get('Origin')!==url.origin)return json({error:'Origin not allowed'},403);try{
  // 限流鍵只交給平台限流器，不寫入資料庫或日誌；缺少綁定時禁止公開建立身分。
  if(env.API_LIMIT){const {success}=await env.API_LIMIT.limit({key:req.headers.get('CF-Connecting-IP')||'local'});if(!success)return json({error:'Too many requests'},429)}
  if(req.method==='GET'&&url.pathname==='/api/ranking'){const level=url.searchParams.get('level');if(!['beginner','intermediate'].includes(level))return json({error:'Invalid level'},400);const {results}=await env.DB.prepare('SELECT p.alias,s.stars FROM scores s JOIN players p ON p.id=s.player_id WHERE s.level=? ORDER BY s.stars DESC,s.player_id ASC LIMIT 50').bind(level).all();return json(results)}
