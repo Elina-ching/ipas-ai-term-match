@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import worker,{validAnswer} from './server/worker.mjs';
+const ctx={window:{}};vm.createContext(ctx);for(const f of ['data.js','levels.js','python-data.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
+test('all banks have unique IDs and complete explanations',()=>{for(const bank of Object.values(ctx.window)){assert.equal(new Set(bank.map(q=>q.id)).size,bank.length);for(const q of bank)assert.ok(q.explanation||q.note)}for(const q of ctx.window.PYTHON_BANK){assert.equal(q.options.length,4);assert.ok(q.answer>=0&&q.answer<4);assert.equal(new Set(q.options).size,4)}});
+test('server enforces level and canonical answer; cannot send arbitrary score',()=>{assert.equal(validAnswer('beginner','b01','b01'),true);assert.equal(validAnswer('intermediate','b01','b01'),false);assert.equal(validAnswer('intermediate','py01','option0'),true);assert.equal(validAnswer('intermediate','py01','option1'),false);assert.equal(validAnswer('beginner','unknown','unknown'),false);assert.equal(validAnswer('__proto__','x','x'),false)});
+test('missing database is an explicit unavailable response',async()=>{const r=await worker.fetch(new Request('https://game.test/api/ranking?level=beginner'),{});assert.equal(r.status,503)});
+test('cross origin writes are rejected before any database access',async()=>{const r=await worker.fetch(new Request('https://game.test/api/join',{method:'POST',headers:{Origin:'https://other.test'}}),{DB:{}});assert.equal(r.status,403)});
+test('no auth cannot delete cloud records',async()=>{const r=await worker.fetch(new Request('https://game.test/api/me',{method:'DELETE'}),{DB:{}});assert.equal(r.status,401)});
+test('static pages reference existing local assets',()=>{for(const file of ['index.html','play.html','python.html']){const source=fs.readFileSync(file,'utf8');for(const m of source.matchAll(/(?:src|href)="([^"#]+)"/g)){const path=m[1].split('?')[0];if(!path.startsWith('http'))assert.ok(fs.existsSync(path),file+': '+path)}}});
+test('legacy games retained and level bridge loaded before app',()=>{const html=fs.readFileSync('play.html','utf8');for(const mode of ['truck','memory','cannon'])assert.ok(html.includes('id="'+mode+'Game"'));assert.ok(html.indexOf('game-bridge.js')<html.indexOf('app.js'));assert.ok(fs.readFileSync('app.js','utf8').includes('g===generation'))});

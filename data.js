@@ -120,3 +120,4 @@ window.TERM_BANK = [
   {id:'gov14',category:'AI 治理 / 專案管理',term:'ROI',definition:'衡量投入成本與產生效益之間報酬關係的指標。',note:'AI 專案常用來評估商業價值。'},
   {id:'gov15',category:'AI 治理 / 專案管理',term:'Model Card',definition:'記錄模型用途、限制、資料、評估與風險等資訊的模型文件。',note:'有助於透明度與模型治理。'}
 ];
+
